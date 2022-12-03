@@ -5,7 +5,7 @@ import 'dart:async';
 import 'package:clisitef/model/pinpad_information.dart';
 
 class PinPadStream {
-  final _controller = StreamController<PinPadInformation>();
+  final _controller = StreamController<PinPadInformation>.broadcast();
 
   PinPadInformation _internalPinPadInfo = PinPadInformation(isPresent: false);
 
