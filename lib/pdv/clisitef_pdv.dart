@@ -79,14 +79,12 @@ class CliSiTefPDV {
 
     if (_transactionStream != null) {
       _transactionStream!.success(false);
-      _transactionStream!.done();
-      _transactionStream = null;
+      _transactionStream!.emit(_transactionStream!.transaction);
     }
   }
 
   onTransactionEvent(TransactionEvents event, { PlatformException? exception }) {
     Transaction? t = _transactionStream?.transaction;
-    print(event);
     if (t != null) {
       switch(event) {
         case TransactionEvents.transactionConfirm:
