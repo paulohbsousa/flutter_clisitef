@@ -149,7 +149,7 @@ class CliSiTefAndroid implements CliSiTefSDK {
     bool? success =
         await _methodChannel.invokeMethod<bool>('startTransaction', {
       'modalidade': modalidade.value,
-      'valor': valor.toString(),
+      'valor': valor.toString().replaceAll(',', '').replaceAll('.', ','),
       'cupomFiscal': cupomFiscal,
       'dataFiscal': DateFormat('yyyyMMdd').format(dataFiscal),
       'horario': DateFormat('hhmmss').format(dataFiscal),
