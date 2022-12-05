@@ -146,10 +146,11 @@ class CliSiTefAndroid implements CliSiTefSDK {
   @override
   Future<bool> startTransaction(Modalidade modalidade, double valor,
       String cupomFiscal, DateTime dataFiscal, String operador) async {
+    NumberFormat f = NumberFormat("############.00", "pt");
     bool? success =
         await _methodChannel.invokeMethod<bool>('startTransaction', {
       'modalidade': modalidade.value,
-      'valor': valor.toString().replaceAll(',', '').replaceAll('.', ','),
+      'valor': f.format(valor),
       'cupomFiscal': cupomFiscal,
       'dataFiscal': DateFormat('yyyyMMdd').format(dataFiscal),
       'horario': DateFormat('hhmmss').format(dataFiscal),
