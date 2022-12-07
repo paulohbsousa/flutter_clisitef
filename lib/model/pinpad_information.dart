@@ -15,5 +15,7 @@ class PinPadInformation {
 
   bool waiting = false;
 
+  bool isSimulated = false;
+
   PinPadEvents event = PinPadEvents.unknown;
 }

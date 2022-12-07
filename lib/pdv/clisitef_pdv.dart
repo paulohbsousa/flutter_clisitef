@@ -14,7 +14,7 @@ import 'package:clisitef/pdv/stream/transaction_stream.dart';
 import 'package:flutter/services.dart';
 
 class CliSiTefPDV {
-  CliSiTefPDV({ required this.client, required this.configuration }) {
+  CliSiTefPDV({ required this.client, required this.configuration, this.isSimulated = false }) {
     client.configure(configuration.enderecoSitef, configuration.codigoLoja, configuration.numeroTerminal);
     client.setEventHandler(null, onPinPadEvent);
     client.setDataHandler(onData);
@@ -25,6 +25,8 @@ class CliSiTefPDV {
   CliSiTefSDK client;
 
   TransactionStream? _transactionStream;
+
+  bool isSimulated;
 
   final PinPadStream _pinPadStream = PinPadStream();
 
@@ -59,6 +61,13 @@ class CliSiTefPDV {
   }
 
   Future<bool> isPinPadPresent() async {
+    if (isSimulated) {
+      PinPadInformation pinPadSimulatedInfo = PinPadInformation(isPresent: true);
+      pinPadSimulatedInfo.isConnected = true;
+      pinPadSimulatedInfo.isReady = true;
+      pinPadStream.emit(pinPadSimulatedInfo);
+      return true;
+    }
     PinPadInformation pinPad = await client.getPinpadInformation();
     PinPadInformation pinPadStreamInfo = _pinPadStream.pinPadInfo;
     pinPadStreamInfo.isPresent = pinPad.isPresent;

@@ -8,13 +8,14 @@ import 'package:clisitef/model/pinpad_information.dart';
 import 'package:clisitef/model/transaction.dart';
 import 'package:clisitef/model/transaction_events.dart';
 import 'package:clisitef/pdv/clisitef_pdv.dart';
+import 'package:clisitef/pdv/simulated_pin_pad_widget.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 
 import 'package:clisitef/clisitef.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const MaterialApp(home: MyApp()));
 }
 
 class MyApp extends StatefulWidget {
@@ -31,26 +32,50 @@ class _MyAppState extends State<MyApp> {
 
   String pinPadInfo = '';
 
+  bool _isSimulated = true;
+
   TransactionEvents transactionStatus = TransactionEvents.unknown;
 
   List<String> dataReceived = [];
 
-  int _step = 0;
+  String _lastTitle = '';
 
   @override
   void initState() {
     super.initState();
-    CliSiTefConfiguration configuration = CliSiTefConfiguration(enderecoSitef: '10.211.55.3', codigoLoja: '0', numeroTerminal: '1');
-    pdv = CliSiTefPDV(client: _clisitefPlugin, configuration: configuration);
+    CliSiTefConfiguration configuration = CliSiTefConfiguration(
+        enderecoSitef: '10.211.55.3', codigoLoja: '0', numeroTerminal: '1');
+    pdv = CliSiTefPDV(
+        client: _clisitefPlugin,
+        configuration: configuration,
+        isSimulated: _isSimulated);
 
     pdv.pinPadStream.stream.listen((PinPadInformation event) {
       setState(() {
         PinPadInformation pinPad = event;
-        pinPadInfo = 'isPresent: ${pinPad.isPresent.toString()} \n isBluetoothEnabled: ${pinPad.isBluetoothEnabled.toString()} \n isConnected: ${pinPad.isConnected.toString()} \n isReady: ${pinPad.isReady.toString()} \n event: ${pinPad.event.toString()} ';
+        pinPadInfo =
+            'isPresent: ${pinPad.isPresent.toString()} \n isBluetoothEnabled: ${pinPad.isBluetoothEnabled.toString()} \n isConnected: ${pinPad.isConnected.toString()} \n isReady: ${pinPad.isReady.toString()} \n event: ${pinPad.event.toString()} ';
       });
     });
 
     pdv.dataStream.stream.listen((CliSiTefData event) {
+
+      print(event.buffer);
+      print(event.event);
+
+      if (event.event == DataEvents.menuTitle) {
+        _lastTitle = event.buffer;
+      }
+
+      if (event.event == DataEvents.menuOptions || event.event == DataEvents.getField) {
+        showDialog(
+            context: context,
+            builder: (context) {
+              return SimulatedPinPadWidget(title: _lastTitle, options: event.buffer, submit: (id) {
+                pdv.continueTransaction(id);
+              },);
+            });
+      }
       setState(() {
         if (event.event == DataEvents.data) {
           if (event.isClientInvoice()) {
@@ -64,25 +89,6 @@ class _MyAppState extends State<MyApp> {
             dataReceived.add(event.buffer);
           }
         }
-        if (event.waiting == true) {
-          if (event.event == DataEvents.menuOptions) {
-            pdv.continueTransaction("1");
-          }
-          if (event.event == DataEvents.getField) {
-            if (_step == 0) {
-              pdv.continueTransaction("5431038060179122");
-              _step++;
-            } else if (_step == 1) {
-              pdv.continueTransaction("0127");
-              _step++;
-            } else {
-              print(event.fieldId);
-              print(event.minLength);
-              print(event.maxLength);
-              print(event.buffer);
-            }
-          }
-        }
       });
     });
   }
@@ -93,11 +99,8 @@ class _MyAppState extends State<MyApp> {
 
       setState(() {
         PinPadInformation pinPad = pdv.pinPadStream.pinPadInfo;
-        pinPadInfo = 'isPresent: ${pinPad.isPresent
-            .toString()} \n isBluetoothEnabled: ${pinPad.isBluetoothEnabled
-            .toString()} \n isConnected: ${pinPad.isConnected
-            .toString()} \n isReady: ${pinPad.isReady
-            .toString()} \n event: ${pinPad.event.toString()} ';
+        pinPadInfo =
+            'isPresent: ${pinPad.isPresent.toString()} \n isBluetoothEnabled: ${pinPad.isBluetoothEnabled.toString()} \n isConnected: ${pinPad.isConnected.toString()} \n isReady: ${pinPad.isReady.toString()} \n event: ${pinPad.event.toString()} ';
       });
     } on Exception {
       print('Failed!');
@@ -107,9 +110,12 @@ class _MyAppState extends State<MyApp> {
   void transaction() async {
     try {
       Stream<Transaction> paymentStream = await pdv.payment(
-          Modalidade.test, 100, cupomFiscal: '1',
-          dataFiscal: DateTime.now());
-      _step = 0;
+          Modalidade.test, 100,
+          cupomFiscal: '1', dataFiscal: DateTime.now());
+
+      if (_isSimulated) {
+        print('here is simulated');
+      }
 
       paymentStream.listen((Transaction transaction) {
         setState(() {
@@ -123,7 +129,7 @@ class _MyAppState extends State<MyApp> {
       print(e.toString());
     }
   }
-  
+
   void cancel() async {
     try {
       await pdv.cancelTransaction();
@@ -146,9 +152,15 @@ class _MyAppState extends State<MyApp> {
         body: Center(
           child: Column(
             children: [
-              ElevatedButton(onPressed: () => pinpad(), child: Text('Verificar presenca pinpad')),
-              ElevatedButton(onPressed: () => transaction(), child: Text('Iniciar transacao')),
-              ElevatedButton(onPressed: () => cancel(), child: Text('Cancela ultima transacao')),
+              ElevatedButton(
+                  onPressed: () => pinpad(),
+                  child: Text('Verificar presenca pinpad')),
+              ElevatedButton(
+                  onPressed: () => transaction(),
+                  child: Text('Iniciar transacao')),
+              ElevatedButton(
+                  onPressed: () => cancel(),
+                  child: Text('Cancela ultima transacao')),
               Text("PinPadInfo:"),
               Text(pinPadInfo),
               Text("\n\nTransaction Status:"),
