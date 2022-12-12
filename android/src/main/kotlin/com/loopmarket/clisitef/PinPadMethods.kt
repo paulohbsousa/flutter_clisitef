@@ -1,5 +1,7 @@
 package com.loopmarket.clisitef
 
+import android.annotation.SuppressLint
+import android.util.Log
 import br.com.softwareexpress.sitef.android.CliSiTef
 
 class PinPadMethods(cliSiTef: CliSiTef): SiTefClient(cliSiTef) {
@@ -11,10 +13,14 @@ class PinPadMethods(cliSiTef: CliSiTef): SiTefClient(cliSiTef) {
         success(cliSiTef.pinpad.readYesNo(message))
     }
 
+    @SuppressLint("LongLogTag")
     fun isPresent() {
         try {
             success(cliSiTef.pinpad.isPresent)
         } catch (e: Exception) {
+            success(false)
+        } catch (e: Error) {
+            Log.e("PinPadMethods::isPresent", e.toString());
             success(false)
         }
     }
