@@ -15,10 +15,18 @@ import 'package:flutter/services.dart';
 
 class CliSiTefPDV {
   CliSiTefPDV({ required this.client, required this.configuration, this.isSimulated = false }) {
-    client.configure(configuration.enderecoSitef, configuration.codigoLoja, configuration.numeroTerminal);
+    _isReady = _init();
     client.setEventHandler(null, onPinPadEvent);
     client.setDataHandler(onData);
   }
+
+  Future _init() async {
+    _isReady = client.configure(configuration.enderecoSitef, configuration.codigoLoja, configuration.numeroTerminal);
+  }
+
+  late Future _isReady;
+
+  Future get isReady => _isReady;
 
   CliSiTefConfiguration configuration;
 
