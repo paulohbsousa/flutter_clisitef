@@ -58,7 +58,7 @@ class ClisitefPlugin: FlutterPlugin, MethodCallHandler {
       "setPinpadDisplayMessage" -> pinPadMethods.setDisplayMessage(call.argument<String>("message")!!)
       "pinpadReadYesNo" -> pinPadMethods.readYesOrNo(call.argument<String>("message")!!)
       "pinpadIsPresent" -> pinPadMethods.isPresent()
-      "configure" -> tefMethods.configure(call.argument<String>("enderecoSitef")!!, call.argument<String>("codigoLoja")!!, call.argument<String>("numeroTerminal")!!, "TipoPinPad=Android_AUTO")
+      "configure" -> tefMethods.configure(call.argument<String>("enderecoSitef")!!, call.argument<String>("codigoLoja")!!, call.argument<String>("numeroTerminal")!!, "[TipoPinPad=Android_AUTO;]")
       "getQttPendingTransactions" -> tefMethods.getQttPendingTransactions(call.argument<String>("dataFiscal")!!, call.argument<String>("cupomFiscal")!!)
       "startTransaction" -> tefMethods.startTransaction(cliSiTefListener, call.argument<Int>("modalidade")!!, call.argument<String>("valor")!!, call.argument<String>("cupomFiscal")!!, call.argument<String>("dataFiscal")!!, call.argument<String>("horario")!!, call.argument<String>("operador")!!)
       "finishLastTransaction" -> tefMethods.finishLastTransaction(call.argument<Int>("confirma")!!)
