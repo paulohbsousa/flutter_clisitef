@@ -38,13 +38,14 @@ class ClisitefPlugin: FlutterPlugin, MethodCallHandler {
     cliSiTef = CliSiTef(flutterPluginBinding.applicationContext);
 
     cliSiTefListener = CliSiTefListener(cliSiTef)
-    cliSiTef.setMessageHandler(cliSiTefListener.onMessage(Looper.getMainLooper()));
 
     eventChannel = EventChannel(flutterPluginBinding.binaryMessenger, "$CHANNEL/events")
     eventChannel.setStreamHandler(EventHandler.setListener(cliSiTefListener))
 
     dataChannel = EventChannel(flutterPluginBinding.binaryMessenger, "$CHANNEL/events/data")
     dataChannel.setStreamHandler(DataHandler.setListener(cliSiTefListener))
+
+    cliSiTef.setMessageHandler(cliSiTefListener.onMessage(Looper.getMainLooper()));
   }
 
 

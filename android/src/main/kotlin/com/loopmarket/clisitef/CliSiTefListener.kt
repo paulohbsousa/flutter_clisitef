@@ -80,18 +80,18 @@ class CliSiTefListener(private val cliSiTef: CliSiTef): ICliSiTefListener {
         dataSink = sink
     }
 
-    fun onMessage(looper: Looper) = Handler(looper).apply {
-        fun handleMessage(message: Message) {
-            when (message.what) {
-                CliSiTefI.EVT_INICIA_ATIVACAO_BT -> eventSink?.success(PinPadEvents.START_BLUETOOTH)
-                CliSiTefI.EVT_FIM_ATIVACAO_BT -> eventSink?.success(PinPadEvents.END_BLUETOOTH)
-                CliSiTefI.EVT_INICIA_AGUARDA_CONEXAO_PP -> eventSink?.success(PinPadEvents.WAITING_PINPAD_CONNECTION)
-                CliSiTefI.EVT_FIM_AGUARDA_CONEXAO_PP -> eventSink?.success(PinPadEvents.PINPAD_OK)
-                CliSiTefI.EVT_PP_BT_CONFIGURANDO -> eventSink?.success(PinPadEvents.WAITING_PINPAD_BLUETOOTH)
-                CliSiTefI.EVT_PP_BT_CONFIGURADO -> eventSink?.success(PinPadEvents.PINPAD_BLUETOOTH_CONNECTED)
-                CliSiTefI.EVT_PP_BT_DESCONECTADO -> eventSink?.success(PinPadEvents.PINPAD_BLUETOOTH_DISCONNECTED)
-                else -> eventSink?.error(PinPadEvents.GENERIC_ERROR.named, message.what.toString(), message)
-            }
+    fun onMessage(looper: Looper) = Handler(looper) {
+        message ->
+        when (message.what) {
+            CliSiTefI.EVT_INICIA_ATIVACAO_BT -> eventSink?.success(PinPadEvents.START_BLUETOOTH)
+            CliSiTefI.EVT_FIM_ATIVACAO_BT -> eventSink?.success(PinPadEvents.END_BLUETOOTH)
+            CliSiTefI.EVT_INICIA_AGUARDA_CONEXAO_PP -> eventSink?.success(PinPadEvents.WAITING_PINPAD_CONNECTION)
+            CliSiTefI.EVT_FIM_AGUARDA_CONEXAO_PP -> eventSink?.success(PinPadEvents.PINPAD_OK)
+            CliSiTefI.EVT_PP_BT_CONFIGURANDO -> eventSink?.success(PinPadEvents.WAITING_PINPAD_BLUETOOTH)
+            CliSiTefI.EVT_PP_BT_CONFIGURADO -> eventSink?.success(PinPadEvents.PINPAD_BLUETOOTH_CONNECTED)
+            CliSiTefI.EVT_PP_BT_DESCONECTADO -> eventSink?.success(PinPadEvents.PINPAD_BLUETOOTH_DISCONNECTED)
+            else -> eventSink?.error(PinPadEvents.GENERIC_ERROR.named, message.what.toString(), message)
         }
+        true
     }
 }
