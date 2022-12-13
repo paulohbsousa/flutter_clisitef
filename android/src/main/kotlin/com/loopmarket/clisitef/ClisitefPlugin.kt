@@ -36,6 +36,7 @@ class ClisitefPlugin: FlutterPlugin, MethodCallHandler {
     methodChannel.setMethodCallHandler(this)
 
     cliSiTef = CliSiTef(flutterPluginBinding.applicationContext);
+    cliSiTef.setDebug(true)
 
     cliSiTefListener = CliSiTefListener(cliSiTef)
 
@@ -46,13 +47,13 @@ class ClisitefPlugin: FlutterPlugin, MethodCallHandler {
     dataChannel.setStreamHandler(DataHandler.setListener(cliSiTefListener))
 
     cliSiTef.setMessageHandler(cliSiTefListener.onMessage(Looper.getMainLooper()));
+
+    tefMethods = TefMethods(cliSiTef)
+    pinPadMethods = PinPadMethods(cliSiTef)
   }
 
 
   override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
-    tefMethods = TefMethods(cliSiTef)
-    pinPadMethods = PinPadMethods(cliSiTef)
-
     tefMethods.setResultHandler(result);
     pinPadMethods.setResultHandler(result);
     when (call.method) {
