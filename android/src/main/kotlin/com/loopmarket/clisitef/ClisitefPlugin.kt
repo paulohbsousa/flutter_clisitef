@@ -36,7 +36,6 @@ class ClisitefPlugin: FlutterPlugin, MethodCallHandler {
     methodChannel.setMethodCallHandler(this)
 
     cliSiTef = CliSiTef(flutterPluginBinding.applicationContext);
-    cliSiTef.setDebug(true)
 
     cliSiTefListener = CliSiTefListener(cliSiTef)
 
