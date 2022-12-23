@@ -18,7 +18,7 @@ abstract class CliSiTefSDK {
 
   Future<bool> continueTransaction(String data);
 
-  Future<bool> configure(String enderecoSitef, String codigoLoja, String numeroTerminal);
+  Future<bool> configure(String enderecoSitef, String codigoLoja, String numeroTerminal, int cnpjEmpresa, int cnpjLoja);
 
   Future<bool> finishTransaction(bool confirma, String cupomFiscal, DateTime dataFiscal);
 

@@ -64,12 +64,14 @@ class CliSiTefAndroid implements CliSiTefSDK {
 
   /// If an error occurs it throw an
   /// [PlatformException] with status code related to the error
-  Future<bool> configure(
-      String enderecoSitef, String codigoLoja, String numeroTerminal) async {
+  Future<bool> configure(String enderecoSitef, String codigoLoja,
+      String numeroTerminal, int cnpjEmpresa, int cnpjLoja) async {
     bool? success = await _methodChannel.invokeMethod<bool>('configure', {
       'enderecoSitef': enderecoSitef,
       'codigoLoja': codigoLoja.padLeft(8, '0'),
-      'numeroTerminal': numeroTerminal.padLeft(8, '0')
+      'numeroTerminal': numeroTerminal.padLeft(8, '0'),
+      'cnpjEmpresa': cnpjEmpresa,
+      'cnpjLoja': cnpjLoja
     });
 
     return success ?? false;
@@ -102,7 +104,7 @@ class CliSiTefAndroid implements CliSiTefSDK {
   @override
   Future<bool> continueTransaction(String data) async {
     bool? success =
-    await _methodChannel.invokeMethod<bool>('continueTransaction', {
+        await _methodChannel.invokeMethod<bool>('continueTransaction', {
       'data': data,
     });
 
