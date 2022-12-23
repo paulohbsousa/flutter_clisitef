@@ -4,11 +4,17 @@ class CliSiTefConfiguration {
   CliSiTefConfiguration(
       {required this.enderecoSitef,
       required this.codigoLoja,
-      required this.numeroTerminal});
+      required this.numeroTerminal,
+      required this.cnpjLoja,
+      required this.cnpjEmpresa});
 
   final String enderecoSitef;
 
   final String codigoLoja;
 
   final String numeroTerminal;
+
+  final int cnpjLoja;
+
+  final int cnpjEmpresa;
 }

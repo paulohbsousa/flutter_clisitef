@@ -21,7 +21,7 @@ class CliSiTefPDV {
   }
 
   Future _init() async {
-    _isReady = client.configure(configuration.enderecoSitef, configuration.codigoLoja, configuration.numeroTerminal);
+    _isReady = client.configure(configuration.enderecoSitef, configuration.codigoLoja, configuration.numeroTerminal, configuration.cnpjEmpresa, configuration.cnpjLoja);
   }
 
   late Future _isReady;
