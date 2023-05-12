@@ -65,7 +65,7 @@ class CliSiTefAndroid implements CliSiTefSDK {
   /// If an error occurs it throw an
   /// [PlatformException] with status code related to the error
   Future<bool> configure(String enderecoSitef, String codigoLoja,
-      String numeroTerminal, int cnpjEmpresa, int cnpjLoja) async {
+      String numeroTerminal, String cnpjEmpresa, String cnpjLoja) async {
     bool? success = await _methodChannel.invokeMethod<bool>('configure', {
       'enderecoSitef': enderecoSitef,
       'codigoLoja': codigoLoja.padLeft(8, '0'),

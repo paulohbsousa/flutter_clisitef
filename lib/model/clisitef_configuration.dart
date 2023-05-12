@@ -14,7 +14,7 @@ class CliSiTefConfiguration {
 
   final String numeroTerminal;
 
-  final int cnpjLoja;
+  final String cnpjLoja;
 
-  final int cnpjEmpresa;
+  final String cnpjEmpresa;
 }
