@@ -1,4 +1,4 @@
-package com.loopmarket.clisitef
+package com.paulohbsousa.clisitef
 
 import io.flutter.plugin.common.MethodChannel.Result
 import br.com.softwareexpress.sitef.android.CliSiTef
@@ -15,7 +15,7 @@ open class SiTefClient(protected val cliSiTef: CliSiTef) {
         if (resultHandler != null) {
             resultHandler!!.success(result);
         } else {
-            Log.v("com.loopmarket.clisitef.SiTefClient::success", result.toString())
+            Log.v("com.paulohbsousa.clisitef.SiTefClient::success", result.toString())
         }
     }
 
@@ -23,7 +23,7 @@ open class SiTefClient(protected val cliSiTef: CliSiTef) {
         if (resultHandler != null) {
             resultHandler!!.error(errorCode, errorMessage, errorDetails);
         } else {
-            Log.v("com.loopmarket.clisitef.SiTefClient::error::$errorCode", errorMessage.toString())
+            Log.v("com.paulohbsousa.clisitef.SiTefClient::error::$errorCode", errorMessage.toString())
         }
     }
 
@@ -31,7 +31,7 @@ open class SiTefClient(protected val cliSiTef: CliSiTef) {
         if (resultHandler != null) {
             resultHandler!!.notImplemented();
         } else {
-            Log.v("com.loopmarket.clisitef.SiTefClient::notImplemented", "")
+            Log.v("com.paulohbsousa.clisitef.SiTefClient::notImplemented", "")
         }
     }
 }

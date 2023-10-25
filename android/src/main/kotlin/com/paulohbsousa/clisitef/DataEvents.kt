@@ -1,4 +1,4 @@
-package com.loopmarket.clisitef
+package com.paulohbsousa.clisitef
 
 enum class DataEvents(val named: String) {
     PRESS_ANY_KEY("PRESS_ANY_KEY"),

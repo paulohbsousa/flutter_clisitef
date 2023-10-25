@@ -1,4 +1,4 @@
-group 'com.loopmarket.clisitef'
+group 'com.paulohbsousa.clisitef'
 version '1.0-SNAPSHOT'
 
 buildscript {

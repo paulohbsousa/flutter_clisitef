@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.loopmarket.clisitef_example">
+    package="com.paulohbsousa.clisitef_example">
    <application
         android:label="clisitef_example"
         android:name="${applicationName}"

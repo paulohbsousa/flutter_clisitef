@@ -1,4 +1,4 @@
-package com.loopmarket.clisitef
+package com.paulohbsousa.clisitef
 
 import android.annotation.SuppressLint
 import android.util.Log

@@ -36,7 +36,7 @@ flutter:
   plugin:
     platforms:
       android:
-        package: com.loopmarket.clisitef
+        package: com.paulohbsousa.clisitef
         pluginClass: ClisitefPlugin
 
   # To add assets to your plugin package, add an assets section, like this:

@@ -1,4 +1,4 @@
-package com.loopmarket.clisitef
+package com.paulohbsousa.clisitef
 
 import br.com.softwareexpress.sitef.android.CliSiTef
 import br.com.softwareexpress.sitef.android.ICliSiTefListener

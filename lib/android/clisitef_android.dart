@@ -17,13 +17,13 @@ class CliSiTefAndroid implements CliSiTefSDK {
       CliSiTefAndroid._privateConstructor();
 
   static const MethodChannel _methodChannel =
-      MethodChannel('com.loopmarket.clisitef');
+      MethodChannel('com.paulohbsousa.clisitef');
 
   static const EventChannel _eventChannel =
-      EventChannel('com.loopmarket.clisitef/events');
+      EventChannel('com.paulohbsousa.clisitef/events');
 
   static const EventChannel _dataChannel =
-      EventChannel('com.loopmarket.clisitef/events/data');
+      EventChannel('com.paulohbsousa.clisitef/events/data');
 
   factory CliSiTefAndroid() {
     return _instance;

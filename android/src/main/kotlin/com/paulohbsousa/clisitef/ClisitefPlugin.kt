@@ -1,10 +1,10 @@
-package com.loopmarket.clisitef
+package com.paulohbsousa.clisitef
 
 import android.os.Looper
 import androidx.annotation.NonNull
 import br.com.softwareexpress.sitef.android.CliSiTef
-import com.loopmarket.clisitef.channel.DataHandler
-import com.loopmarket.clisitef.channel.EventHandler
+import com.paulohbsousa.clisitef.channel.DataHandler
+import com.paulohbsousa.clisitef.channel.EventHandler
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.EventChannel
 import io.flutter.plugin.common.MethodCall
@@ -29,7 +29,7 @@ class ClisitefPlugin: FlutterPlugin, MethodCallHandler {
 
   private lateinit var cliSiTefListener: CliSiTefListener;
 
-  private val CHANNEL = "com.loopmarket.clisitef"
+  private val CHANNEL = "com.paulohbsousa.clisitef"
 
   override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
     methodChannel = MethodChannel(flutterPluginBinding.binaryMessenger, CHANNEL)

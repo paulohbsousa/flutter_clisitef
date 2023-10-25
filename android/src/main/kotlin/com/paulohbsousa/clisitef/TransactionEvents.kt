@@ -1,4 +1,4 @@
-package com.loopmarket.clisitef
+package com.paulohbsousa.clisitef
 
 enum class TransactionEvents(val named: String) {
     TRANSACTION_CONFIRM("TRANSACTION_CONFIRM"),

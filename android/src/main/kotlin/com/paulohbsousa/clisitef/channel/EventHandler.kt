@@ -1,26 +1,26 @@
-package com.loopmarket.clisitef.channel
+package com.paulohbsousa.clisitef.channel
 
-import com.loopmarket.clisitef.CliSiTefListener
+import com.paulohbsousa.clisitef.CliSiTefListener
 import io.flutter.plugin.common.EventChannel.StreamHandler
 import io.flutter.plugin.common.EventChannel.EventSink
 
-object DataHandler: StreamHandler {
+object EventHandler: StreamHandler {
     private var eventSink: EventSink? = null
 
     private var listener: CliSiTefListener? = null;
 
-    fun setListener(l: CliSiTefListener): DataHandler {
+    fun setListener(l: CliSiTefListener): EventHandler {
         listener = l
         return this
     }
 
     override fun onListen(arguments: Any?, events: EventSink?) {
         eventSink = events
-        listener?.setDataSink(eventSink)
+        listener?.setEventSink(eventSink)
     }
 
     override fun onCancel(p0: Any?) {
         eventSink = null
-        listener?.setDataSink(null)
+        listener?.setEventSink(null)
     }
 }
